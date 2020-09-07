@@ -48,12 +48,12 @@ services:
     - ./docker/telegraf:/config
     environment:
       - INTERVAL=5
-      - SABNBZBD_HOST=192.168.1.247               # IP ADDRESS OF SABNZBD SERVER
-      - SABNZBD_PORT=8080                         # PORT OF SABNZBD SERVER
-      - SABNZBD_KEY=b63f6ec0c4854b5889595e92d07b3909          # API KEY FOR SABNZBD
-      - INFLUXDB_HOST=192.168.1.252               # IP ADDRESS OF INFLUXDB SERVER
-      - INFLUXDB_PORT=8086                        # PORT OF INFLUXDB SERVER
-      - INFLUXDB_DB=sabnzbd                       # NAME OF SABNZBD DATABASE
+      - SABNBZBD_HOST=192.168.1.252                     # IP ADDRESS OF SABNZBD SERVER
+      - SABNZBD_PORT=8080                               # PORT OF SABNZBD SERVER
+      - SABNZBD_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    # API KEY FOR SABNZBD
+      - INFLUXDB_HOST=192.168.1.252                     # IP ADDRESS OF INFLUXDB SERVER
+      - INFLUXDB_PORT=8086                              # PORT OF INFLUXDB SERVER
+      - INFLUXDB_DB=sabnzbd                             # NAME OF SABNZBD DATABASE
 
 # SPEEDTEST – SPEEDTEST COLLECTOR FOR INFLUXDB
   speedtest:
@@ -94,22 +94,6 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Amsterdam
-
-# PORTAINER - WEBUI FOR CONTAINERS
-  portainer:
-    image: portainer/portainer:latest
-    container_name: portainer
-    restart: unless-stopped
-    command: -H unix:///var/run/docker.sock --tlsskipverify --no-auth
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - 9000:9000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker/portainer:/data
-    environment:
       - TZ=Europe/Amsterdam
 
 # SABNZBD - BINARY NEWSGRABBER (NZB DOWNLOADER)
