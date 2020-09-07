@@ -1,4 +1,4 @@
-## Grafana Config
+## GRAFANA CONFIG
 
 #### Modify the admin_user and admin_password in the grafana.ini file under security sub-heading.
 
