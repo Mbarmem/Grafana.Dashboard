@@ -1,0 +1,189 @@
+# Mo Grafana Dashboard
+version: "3.7"
+
+########################### SERVICES
+services:
+
+# GRAFANA - GRAPHICAL DATA VISUALIZATION FOR INFLUXDB DATA
+  grafana:
+    image: mbarmem/grafana-render:latest
+    container_name: grafana
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 3000:3000
+    user: "0"
+    volumes:
+      - ./docker/grafana:/var/lib/grafana
+      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
+
+# INFLUXDB - DATABASE FOR SENSOR DATA
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 8086:8086
+      - 8089:8089/udp
+    volumes:
+      - ./docker/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./docker/influxdb/db:/var/lib/influxdb
+    environment:
+      - TZ=Europe/Amsterdam
+      - INFLUXDB_HTTP_ENABLED=true
+      - INFLUXDB_DB=host
+    command: -config /etc/influxdb/influxdb.conf
+
+# SABNZBD SCRIPT – SABNZBD STATS FOR INFLUXDB
+  sabnzbd-influxdb:
+    image: mbarmem/sabnzbd_influxdb:latest
+    container_name: sabnzbd-influxdb
+    restart: unless-stopped
+    volumes:
+    - ./docker/telegraf:/config
+    environment:
+      - INTERVAL=5
+      - SABNBZBD_HOST=192.168.1.247               # IP ADDRESS OF SABNZBD SERVER
+      - SABNZBD_PORT=8080                         # PORT OF SABNZBD SERVER
+      - SABNZBD_KEY=b63f6ec0c4854b5889595e92d07b3909          # API KEY FOR SABNZBD
+      - INFLUXDB_HOST=192.168.1.252               # IP ADDRESS OF INFLUXDB SERVER
+      - INFLUXDB_PORT=8086                        # PORT OF INFLUXDB SERVER
+      - INFLUXDB_DB=sabnzbd                       # NAME OF SABNZBD DATABASE
+
+# SPEEDTEST – SPEEDTEST COLLECTOR FOR INFLUXDB
+  speedtest:
+    image: atribe/speedtest-for-influxdb-and-grafana:latest
+    container_name: speedtest
+    volumes:
+      - ./docker/speedtest/config.ini:/src/config.ini
+    restart: unless-stopped
+
+# TELEGRAF - SERVER TELEMERTY AND METRICS COLLECTOR
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
+    environment:
+      - TZ=Europe/Amsterdam
+      - HOST_PROC=/rootfs/proc
+      - HOST_SYS=/rootfs/sys
+      - HOST_ETC=/rootfs/etc
+
+# VARKEN - MONITOR PLEX, SONARR, RADARR, AND OTHER DATA
+  varken:
+    image: boerderij/varken:latest
+    container_name: varken
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./docker/varken:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+# PORTAINER - WEBUI FOR CONTAINERS
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    restart: unless-stopped
+    command: -H unix:///var/run/docker.sock --tlsskipverify --no-auth
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./docker/portainer:/data
+    environment:
+      - TZ=Europe/Amsterdam
+
+# SABNZBD - BINARY NEWSGRABBER (NZB DOWNLOADER)
+  sabnzbd:
+    image: linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 8080:8080
+    volumes:
+      - ./docker/sabnzbd:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - UMASK_SET=022
+
+# TAUTULLI - PLEX STATISTICS AND MONITORING
+  tautulli:
+    image: linuxserver/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 8181:8181
+    volumes:
+      - ./docker/tautulli:/config
+      - ./docker/tautulli/logs:/logs:ro
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+# OMBI - MEDIA REQUESTS
+  req:
+    image: linuxserver/ombi:latest
+    container_name: ombi
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 3579:3579
+    volumes:
+      - ./docker/ombi:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+
+# PLEX - MEDIA SERVER
+  plex:
+    image: plexinc/pms-docker:public
+    container_name: plex
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 32400:32400/tcp
+    volumes:
+      - ./docker/plex:/config
+    environment:
+      - PLEX_UID=1000
+      - PLEX_GID=1000
+      - TZ=Europe/Amsterdam  
+
+# HDDTEMP - MONITOR HDD TEMPS
+  hddtemp:
+    image: drewster727/hddtemp-docker:latest
+    container_name: hddtemp
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - HDDTEMP_ARGS="-q -d -F /dev/sd*"
+      - TZ=Europe/Amsterdam
