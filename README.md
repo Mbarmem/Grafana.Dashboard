@@ -11,13 +11,3 @@ sudo apt install lm-sensors
 sudo sensors-detect --auto
 ```
 ---
-
-#### <li> Install Hddtemp for Temp Monitoring
-```ini
-# Install hddtemp
-sudo apt install hddtemp
- 
-# Configure hddtemp daemon  
-sudo dpkg-reconfigure hddtemp 
-```
----
