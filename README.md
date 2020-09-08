@@ -217,7 +217,8 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
       - ./docker/speedtest/config.ini:/src/config.ini
     restart: unless-stopped
 ```
+---
 
 ## Installing Grafana
 
-**_WORK IN PROGRESS
+WORK IN PROGRESS
