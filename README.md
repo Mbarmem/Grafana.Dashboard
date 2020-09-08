@@ -59,10 +59,10 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ---
 
 ## Installing Telegraf
+##### *Telegraf needs to be installed on each server / device separately unlike Influxdb.
 
 1. Download the config file and place it in the telegraf appdata folder i.e. ./docker/telegraf
 2. Edit the telegraf.conf file. Scroll down to **OUTPUT PLUGINS** and edit the **url** on line 106 and **database** on the 110.
-
 ```ini
 # Configuration for sending metrics to InfluxDB
 [[outputs.influxdb]]
@@ -72,10 +72,17 @@ Telegraf is what collects all the different system metrics and outputs it to an 
   ## For UDP url endpoint database needs to be configured on server side.
  database = "docktelegraf"
 ```
-
 ###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. InfluxDB will save the metrics sent from telegraf under docktelegraf database.
 
-3. Incase you are using default config file, the following input plugins needs to be enabled so that all the panels on the Grafana dashboard will work. It is curently enabled in the attached config file.
+3. Scroll further down to **INPUT PLUGINS** and edit the **url** on line 247.
+```ini
+# # PiHole monitoring
+[[inputs.http]]
+    urls = ["http://192.168.1.253/admin/api.php"]
+```
+###### 192.168.1.253 is the IP address of the pihole server
+
+4. Incase you are using default config file, the following input plugins needs to be enabled so that all the panels on the Grafana dashboard will work. It is curently enabled in the attached config file.
 ```
 [[inputs.docker]]
 
@@ -86,6 +93,12 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 [[inputs.netstat]]
 
 [[inputs.sensors]]
+
+[[inputs.http]]
+
+[[inputs.exec]]
+
+[[inputs.file]]
 ```
 
 #### Installing HDDTemp
