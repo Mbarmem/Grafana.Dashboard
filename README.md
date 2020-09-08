@@ -51,7 +51,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ## Installing Telegraf
 
 1. Download the config file and place it in the telegraf appdata folder i.e. ./docker/telegraf
-2. Edit the telegraf.conf file. Scroll down to <b>OUTPUT PLUGINS</b> and edit the <b>url</b> on line 106 and <b>database</b> on the 110.
+2. Edit the telegraf.conf file. Scroll down to **OUTPUT PLUGINS** and edit the **url** on line 106 and **database** on the 110.
 
 ```ini
 # Configuration for sending metrics to InfluxDB
@@ -100,7 +100,8 @@ sudo apt install lm-sensors
 sudo sensors-detect --auto
 ```
 
-4. Run the docker compose.
+4. Run the docker-compose.
+
 ```ini
 # TELEGRAF - SERVER TELEMERTY AND METRICS COLLECTOR
   telegraf:
@@ -123,3 +124,70 @@ sudo sensors-detect --auto
 ```
 ---
 
+## Installing Varken
+
+1. Download the config file and place it in the varken appdata folder i.e. ./docker/varken
+2. Edit the config file. Detailed instructions can be found [here](https://wiki.cajun.pro/books/varken/page/breakdown).
+3. Run the docker-compose.
+
+```ini
+# VARKEN - MONITOR PLEX, SONARR, RADARR, AND OTHER DATA
+  varken:
+    image: boerderij/varken:latest
+    container_name: varken
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./docker/varken:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+```
+
+## Installing Sabnzbd Script
+
+1. Edit the environmental values in the docker-compose.
+2. Run the docker-compose.
+
+```ini
+# SABNZBD SCRIPT – SABNZBD STATS FOR INFLUXDB
+  sabnzbd-influxdb:
+    image: mbarmem/sabnzbd_influxdb:latest
+    container_name: sabnzbd-influxdb
+    restart: unless-stopped
+    volumes:
+    - ./docker/telegraf:/config
+    environment:
+      - INTERVAL=5
+      - SABNBZBD_HOST=192.168.1.252                     # IP ADDRESS OF SABNZBD SERVER
+      - SABNZBD_PORT=8080                               # PORT OF SABNZBD SERVER
+      - SABNZBD_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    # API KEY FOR SABNZBD
+      - INFLUXDB_HOST=192.168.1.252                     # IP ADDRESS OF INFLUXDB SERVER
+      - INFLUXDB_PORT=8086                              # PORT OF INFLUXDB SERVER
+      - INFLUXDB_DB=sabnzbd                             # NAME OF SABNZBD DATABASE
+```
+---
+
+## Installing Speedtest
+
+1. Download the config file and place it in the speedtest appdata folder i.e. ./docker/speedtest
+2. Edit the config file and modify the **adress** and **port** under Influxdb.
+
+```ini
+[INFLUXDB]
+Address = 192.168.1.252         # IP ADDRESS OF INFLUXDB SERVER
+Port = 8086                     # PORT OF INFLUXDB SERVER
+```
+3. Run the docker-compose.
+
+```ini
+# SPEEDTEST – SPEEDTEST COLLECTOR FOR INFLUXDB
+  speedtest:
+    image: atribe/speedtest-for-influxdb-and-grafana:latest
+    container_name: speedtest
+    volumes:
+      - ./docker/speedtest/config.ini:/src/config.ini
+    restart: unless-stopped
+```
