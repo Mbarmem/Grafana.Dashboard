@@ -51,7 +51,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ## Installing Telegraf
 
 1. Download the config file and place it in the telegraf appdata folder i.e. ./docker/telegraf
-2. Edit the telegraf.conf file. Scroll down to OUTPUT PLUGINS and edit the url on line 106 and database on the 110.
+2. Edit the telegraf.conf file. Scroll down to <b>OUTPUT PLUGINS</b> and edit the <b>url</b> on line 106 and <b>database</b> on the 110.
 
 ```ini
 # Configuration for sending metrics to InfluxDB
@@ -66,17 +66,19 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. InfluxDB will save the metrics sent from telegraf under docktelegraf database.
 
 3. Incase you are using default config file, the following input plugins needs to be enabled so that all the panels on the Grafana dashboard will work. It is curently enabled in the attached config file.
-
+```
 [[inputs.docker]]
+
 [[inputs.hddtemp]]
+
 [[inputs.net]]
+
 [[inputs.netstat]]
+
 [[inputs.sensors]]
+```
 
----
-
-#### Install HDDTemp
-
+#### <li> Install HDDTemp
 ```ini
 # HDDTEMP - MONITOR HDD TEMPS
   hddtemp:
