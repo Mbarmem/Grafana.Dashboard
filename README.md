@@ -7,9 +7,16 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 
 ### Table of Contents
 - [How it Works](#How-it-Works)
-- [Installing InfluxDB](#InfluxDB)
+- [Installing InfluxDB](#Installing-InfluxDB)
+- [Installing Telegraf](#Installing-Telegraf)
+  * [Install HDDTemp](#Install-HDDTemp)
+  * [Install Sensors for Temp Monitoring](#Install-Sensors-for-Temp-Monitoring)
+- [Installing Varken](#Installing-Varken)
+- [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
+- [Installing Speedtest](#Installing-Speedtest)
 
-<p align="center">  <img src="assets/dashboard.png"></p>
+
+<p align="center"><img src="assets/dashboard.png"></p>
 
 ---
 
