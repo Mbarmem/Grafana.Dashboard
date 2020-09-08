@@ -9,12 +9,13 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [How it Works](#How-it-Works)
 - [Installing InfluxDB](#Installing-InfluxDB)
 - [Installing Telegraf](#Installing-Telegraf)
-  * [Install HDDTemp](#Install-HDDTemp)
-  * [Install Sensors for Temp Monitoring](#Install-Sensors-for-Temp-Monitoring)
+  * [Installing HDDTemp](#Install-HDDTemp)
+  * [Installing Sensors for Temp Monitoring](#Install-Sensors-for-Temp-Monitoring)
 - [Installing Varken](#Installing-Varken)
 - [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
 - [Installing Speedtest](#Installing-Speedtest)
 
+---
 
 <p align="center"><img src="assets/dashboard.png"></p>
 
@@ -87,7 +88,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 [[inputs.sensors]]
 ```
 
-#### <li> Install HDDTemp
+#### Installing HDDTemp
 ```ini
 # HDDTEMP - MONITOR HDD TEMPS
   hddtemp:
@@ -100,7 +101,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
       - TZ=Europe/Amsterdam
 ```
 
-#### <li> Install Sensors for Temp Monitoring
+#### Installing Sensors for Temp Monitoring
 ```ini
 # Install lm-sensor
 sudo apt install lm-sensors
