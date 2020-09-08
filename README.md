@@ -87,6 +87,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 
 [[inputs.sensors]]
 ```
+---
 
 ## Installing HDDTemp
 
