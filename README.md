@@ -14,6 +14,9 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [Installing Varken](#Installing-Varken)
 - [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
 - [Installing Speedtest](#Installing-Speedtest)
+- [Installing Grafana](#Installing-Grafana)
+  * [Configuring Grafana](#Configuring Grafana)
+  * [Setting up Grafana database](#Setting-up-Grafana-database)
 
 ---
 
@@ -214,3 +217,7 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
       - ./docker/speedtest/config.ini:/src/config.ini
     restart: unless-stopped
 ```
+
+## Installing Grafana
+
+### **_WORK IN PROGRESS
