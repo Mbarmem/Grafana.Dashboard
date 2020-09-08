@@ -101,7 +101,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 [[inputs.file]]
 ```
 
-#### Installing HDDTemp
+#### <li> Installing HDDTemp
 ```ini
 # HDDTEMP - MONITOR HDD TEMPS
   hddtemp:
@@ -114,7 +114,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
       - TZ=Europe/Amsterdam
 ```
 
-#### Installing Sensors for Temp Monitoring
+#### <li> Installing Sensors for Temp Monitoring
 ```ini
 # Install lm-sensor
 sudo apt install lm-sensors
