@@ -4,22 +4,6 @@ version: "3.7"
 ########################### SERVICES
 services:
 
-# GRAFANA - GRAPHICAL DATA VISUALIZATION FOR INFLUXDB DATA
-  grafana:
-    image: mbarmem/grafana-render:latest
-    container_name: grafana
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    ports:
-      - 3000:3000
-    user: "0"
-    volumes:
-      - ./docker/grafana:/var/lib/grafana
-      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
-    environment:
-      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
-
 # INFLUXDB - DATABASE FOR SENSOR DATA
   influxdb:
     image: influxdb:latest
@@ -38,6 +22,65 @@ services:
       - INFLUXDB_HTTP_ENABLED=true
       - INFLUXDB_DB=host
     command: -config /etc/influxdb/influxdb.conf
+
+# TELEGRAF - SERVER TELEMERTY AND METRICS COLLECTOR
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
+    environment:
+      - TZ=Europe/Amsterdam
+      - HOST_PROC=/rootfs/proc
+      - HOST_SYS=/rootfs/sys
+      - HOST_ETC=/rootfs/etc
+    
+# GRAFANA - GRAPHICAL DATA VISUALIZATION FOR INFLUXDB DATA
+  grafana:
+    image: mbarmem/grafana-render:latest
+    container_name: grafana
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 3000:3000
+    user: "0"
+    volumes:
+      - ./docker/grafana:/var/lib/grafana
+      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
+
+# HDDTEMP - MONITOR HDD TEMPS
+  hddtemp:
+    image: drewster727/hddtemp-docker:latest
+    container_name: hddtemp
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - HDDTEMP_ARGS="-q -d -F /dev/sd*"
+      - TZ=Europe/Amsterdam
+
+# VARKEN - MONITOR PLEX, SONARR, RADARR, AND OTHER DATA
+  varken:
+    image: boerderij/varken:latest
+    container_name: varken
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./docker/varken:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
 
 # SABNZBD SCRIPT – SABNZBD STATS FOR INFLUXDB
   sabnzbd-influxdb:
@@ -62,39 +105,6 @@ services:
     volumes:
       - ./docker/speedtest/config.ini:/src/config.ini
     restart: unless-stopped
-
-# TELEGRAF - SERVER TELEMERTY AND METRICS COLLECTOR
-  telegraf:
-    image: telegraf:latest
-    container_name: telegraf
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - ./docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /sys:/rootfs/sys:ro
-      - /proc:/rootfs/proc:ro
-      - /etc:/rootfs/etc:ro
-    environment:
-      - TZ=Europe/Amsterdam
-      - HOST_PROC=/rootfs/proc
-      - HOST_SYS=/rootfs/sys
-      - HOST_ETC=/rootfs/etc
-
-# VARKEN - MONITOR PLEX, SONARR, RADARR, AND OTHER DATA
-  varken:
-    image: boerderij/varken:latest
-    container_name: varken
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - ./docker/varken:/config
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Amsterdam
 
 # SABNZBD - BINARY NEWSGRABBER (NZB DOWNLOADER)
   sabnzbd:
@@ -160,14 +170,4 @@ services:
     environment:
       - PLEX_UID=1000
       - PLEX_GID=1000
-      - TZ=Europe/Amsterdam  
-
-# HDDTEMP - MONITOR HDD TEMPS
-  hddtemp:
-    image: drewster727/hddtemp-docker:latest
-    container_name: hddtemp
-    restart: unless-stopped
-    privileged: true
-    environment:
-      - HDDTEMP_ARGS="-q -d -F /dev/sd*"
       - TZ=Europe/Amsterdam
