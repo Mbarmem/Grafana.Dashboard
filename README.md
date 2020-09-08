@@ -1,7 +1,13 @@
-![Mo Dashboard](assets/dashboard.png)
 
 # Grafana.Dashboard
 Grafana dashboard for monitoring virtual machines!!
+
+![License](https://img.shields.io/badge/license-GPL-blue)
+![Status](https://img.shields.io/badge/status-In%20progress-orange)
+
+<p align="center">
+  <img src="assets/dashboard.png">
+</p>
 
 
 #### <li> Install Sensors for Temp Monitoring
