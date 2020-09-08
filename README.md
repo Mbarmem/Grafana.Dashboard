@@ -6,7 +6,7 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 ![Status](https://img.shields.io/badge/status-In%20progress-orange)
 
 ### Table of Contents
-- [How it Works](##How-it-Works)
+- [How it Works](#How-it-Works)
 - [Installing InfluxDB](#InfluxDB)
 
 <p align="center">  <img src="assets/dashboard.png"></p>
