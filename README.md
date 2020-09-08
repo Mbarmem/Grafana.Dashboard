@@ -5,14 +5,14 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 ![License](https://img.shields.io/badge/license-GPL-blue)
 ![Status](https://img.shields.io/badge/status-In%20progress-orange)
 
-- [How it works](#How it works)
+- [How it works](#How)
 
 
 <p align="center">  <img src="assets/dashboard.png"></p>
 
 ---
 
-## How it works
+## How
 In getting all this setup, there are 3 main moving parts. Telegraf, InfluxDB and Grafana.
 Telegraf is what collects all the different system metrics and outputs it to an InfluxDB database that Grafana uses to visualize everything with pretty graphs and bars.
 
