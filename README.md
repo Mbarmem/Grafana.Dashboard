@@ -9,8 +9,8 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [How it Works](#How-it-Works)
 - [Installing InfluxDB](#Installing-InfluxDB)
 - [Installing Telegraf](#Installing-Telegraf)
-  * [Installing HDDTemp](#Install-HDDTemp)
-  * [Installing Sensors for Temp Monitoring](#Install-Sensors-for-Temp-Monitoring)
+  * [Installing HDDTemp](#Installing-HDDTemp)
+  * [Installing Sensors for Temp Monitoring](#Installing-Sensors-for-Temp-Monitoring)
 - [Installing Varken](#Installing-Varken)
 - [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
 - [Installing Speedtest](#Installing-Speedtest)
@@ -59,7 +59,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ---
 
 ## Installing Telegraf
-##### *Telegraf needs to be installed on each server / device separately unlike Influxdb.
+##### Telegraf needs to be installed on each server / device separately unlike Influxdb.
 
 1. Download the config file and place it in the telegraf appdata folder i.e. ./docker/telegraf
 2. Edit the telegraf.conf file. Scroll down to **OUTPUT PLUGINS** and edit the **url** on line 106 and **database** on the 110.
@@ -80,7 +80,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 [[inputs.http]]
     urls = ["http://192.168.1.253/admin/api.php"]
 ```
-###### 192.168.1.253 is the IP address of the pihole server
+###### 192.168.1.253 is the IP address of the pihole server.
 
 4. Incase you are using default config file, the following input plugins needs to be enabled so that all the panels on the Grafana dashboard will work. It is curently enabled in the attached config file.
 ```
@@ -123,7 +123,7 @@ sudo apt install lm-sensors
 sudo sensors-detect --auto
 ```
 
-4. Run the docker-compose.
+5. Run the docker-compose.
 
 ```ini
 # TELEGRAF - SERVER TELEMERTY AND METRICS COLLECTOR
