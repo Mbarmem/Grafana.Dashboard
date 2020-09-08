@@ -5,7 +5,7 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 ![License](https://img.shields.io/badge/license-GPL-blue)
 ![Status](https://img.shields.io/badge/status-In%20progress-orange)
 
-- [How it works](#heading)
+- [How it works](#How it works)
 
 
 <p align="center">  <img src="assets/dashboard.png"></p>
