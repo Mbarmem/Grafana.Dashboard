@@ -263,7 +263,7 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 ```
 ###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf .
 
-<img widht=800 height=600 src="assets/gr_docktelegraf.png">
+<img widht=1000 height=800 src="assets/gr_docktelegraf.png">
 
 
 WORK IN PROGRESS
