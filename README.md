@@ -250,12 +250,20 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 
 1. After the installation is finished go to the WebUI [http://IP:3000] and log in with username and password you chose.
 2. Click on Add data source and select InfluxDB.
+
 <img widht=600 height=300 src="assets/datasource.png">
-<img widht=500 height=300 src="assets/gr_influxdb.png">
 
-3. 
+<img widht=310 height=210 src="assets/gr_influxdb.png">
 
+3. Next give the data source a name, add the URL to InfluxDB, enter the database to use.
+```ini
+   Name: DockTelegraf
+   URL: http://192.168.1.252:8086
+   Database: docktelegraf
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf .
 
+<img widht=800 height=600 src="assets/gr_docktelegraf.png">
 
 
 WORK IN PROGRESS
