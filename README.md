@@ -105,6 +105,9 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ```
 
 #### Installing HDDTemp
+
+For the hddtemp input to work, we need to install the HDDTemp container. There is nothing special to configure here except the time zone variable.
+
 ```ini
 # HDDTEMP - MONITOR HDD TEMPS
   hddtemp:
@@ -220,5 +223,39 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 ---
 
 ## Installing Grafana
+
+1. Download the config file and place it in the grafana appdata folder i.e. ./docker/grafana
+2. Edit the config file and modify the **admin_user** and **admin_password** at line 156 and 160 respectively. Default username and password is **admin**.
+3. Run the docker-compose.
+
+```ini
+# GRAFANA - GRAPHICAL DATA VISUALIZATION FOR INFLUXDB DATA
+  grafana:
+    image: mbarmem/grafana-render:latest
+    container_name: grafana
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 3000:3000
+    user: "0"
+    volumes:
+      - ./docker/grafana:/var/lib/grafana
+      - ./docker/grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
+```
+
+#### Configuring Grafana
+
+1. After the installation is finished go to the WebUI [http://IP:3000] and log in with username and password you chose.
+2. Click on Add data source and select InfluxDB.
+<img widht=600 height=300 src="assets/datasource.png">
+<img widht=500 height=300 src="assets/gr_influxdb.png">
+
+3. 
+
+
+
 
 WORK IN PROGRESS
