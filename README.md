@@ -15,8 +15,9 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
 - [Installing Speedtest](#Installing-Speedtest)
 - [Installing Grafana](#Installing-Grafana)
+  * [Setting up data source](#Setting-up-data-source)
   * [Configuring Grafana](#Configuring-Grafana)
-  * [Setting up Grafana database](#Setting-up-Grafana-database)
+  
 
 ---
 
@@ -246,7 +247,7 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
 ```
 
-#### Configuring Grafana
+#### Setting up data source
 
 1. After the installation is finished go to the WebUI [http://IP:3000] and log in with username and password you chose.
 2. Click on Add data source and select InfluxDB.
@@ -255,7 +256,7 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 
 <img widht=310 height=210 src="assets/gr_influxdb.png">
 
-3. Next give the data source a name, add the URL to InfluxDB, enter the database to use.
+3. Next give the data source a name, add the URL to InfluxDB, enter the database to use. In this case: 
 ```ini
    Name: DockTelegraf
    URL: http://192.168.1.252:8086
@@ -263,7 +264,12 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 ```
 ###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf .
 
-<img widht=1000 height=800 src="assets/gr_docktelegraf.png">
+<img widht=1200 height=1000 src="assets/gr_docktelegraf.png">
+
+4. click Save & Test. If all your settings are correct you should see **Data source is working** message.
+
+<img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+
 
 
 WORK IN PROGRESS
