@@ -14,11 +14,12 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [Installing Varken](#Installing-Varken)
 - [Installing Sabnzbd Script](#Installing-Sabnzbd-Script)
 - [Installing Speedtest](#Installing-Speedtest)
+- [Setting up Pihole](#Setting-up-Pihole)
+  * [Pihole running on Debian](#Pihole-running-on-Debian)
+  * [Pihole running on Docker](#Pihole-running-on-Docker)
 - [Installing Grafana](#Installing-Grafana)
   * [Setting up data source](#Setting-up-data-source)
   * [Configuring Grafana](#Configuring-Grafana)
-  
-
 ---
 
 <p align="center"><img src="assets/dashboard.png"></p>
@@ -223,6 +224,72 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 ```
 ---
 
+## Setting up Pihole
+
+#### Pihole running on Debian
+
+1. Run the below commands to install telegraf on Debian.
+```ini
+curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+sudo apt-get update
+sudo apt-get install telegraf
+```
+
+2. Delete the telegraf config file. 
+```ini
+sudo rm -rf /etc/telegraf/telegraf.conf
+```
+
+3. Download the config file and place it in the telegraf folder i.e. /etc/telegraf/telegraf.conf
+
+4. Edit the telegraf.conf file. Scroll down to **OUTPUT PLUGINS** and edit the **url** on line 106 and **database** on the 110.
+```ini
+# Configuration for influxdb server to send metrics to
+[[outputs.influxdb]]
+  urls = ["http://192.168.1.252:8086"] # required
+  database = "pihole1" # required
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. InfluxDB will save the pihole metrics sent from telegraf under pihole1 database.
+
+5. Scroll further down to **INPUT PLUGINS** and edit the **url** on line 247.
+```ini
+# # PiHole monitoring
+[[inputs.http]]
+    urls = ["http://192.168.1.253/admin/api.php"]
+```
+###### 192.168.1.253 is the IP address of the pihole server.
+
+6. Start Telegraf
+```ini
+sudo systemctl start telegraf
+```
+
+#### Pihole running on Docker.
+
+1. Install telegraf with docker as described earlier.
+
+2. Download the config file and place it in the telegraf appdata folder i.e. ./docker/telegraf
+
+2. Edit the telegraf.conf file. Scroll down to **OUTPUT PLUGINS** and edit the **url** on line 106 and **database** on the 110.
+```ini
+# Configuration for sending metrics to InfluxDB
+[[outputs.influxdb]]
+  urls = ["http://192.168.1.252:8086"] # required
+  database = "pihole1" # required
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. InfluxDB will save the metrics sent from telegraf under docktelegraf database.
+
+3. Scroll further down to **INPUT PLUGINS** and edit the **url** on line 247.
+```ini
+# # PiHole monitoring
+[[inputs.http]]
+    urls = ["http://192.168.1.253/admin/api.php"]
+```
+###### 192.168.1.253 is the IP address of the pihole server.
+
+---
+
 ## Installing Grafana
 
 1. Download the config file and place it in the grafana appdata folder i.e. ./docker/grafana
@@ -249,7 +316,7 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 
 #### Setting up data source
 
-1. After the installation is finished go to the WebUI [http://IP:3000] and log in with username and password you chose.
+1. After the installation is finished go to the WebUI (http://IP:3000) and log in with username and password you chose.
 2. Click on Add data source and select InfluxDB.
 
 <img widht=600 height=300 src="assets/datasource.png">
