@@ -23,6 +23,7 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
     * [Varken - Plex Ecosystem](#Varken-Plex-Ecosystem)
     * [Sabnzbd](#Sabnzbd)
     * [SpeedTest](#SpeedTest)
+  * [Copying Grafana Dashboard](#Copying-Grafana-Dashboard)  
   * [Configuring Grafana](#Configuring-Grafana)
 ---
 
