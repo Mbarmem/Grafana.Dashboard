@@ -337,7 +337,7 @@ sudo systemctl start telegraf
 
 <img widht=1200 height=1000 src="assets/gr_docktelegraf.png">
 
-4. click Save & Test. If all your settings are correct you should see **Data source is working** message.
+4. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
 
@@ -351,11 +351,11 @@ sudo systemctl start telegraf
    URL: http://192.168.1.252:8086
    Database: varken
 ```
-###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under varken.
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. varken is the database which was set earlier under varken.
 
 <img widht=1200 height=1000 src="assets/gr_varken.png">
 
-3. click Save & Test. If all your settings are correct you should see **Data source is working** message.
+3. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
 
