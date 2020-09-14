@@ -272,7 +272,7 @@ sudo systemctl start telegraf
 ```
 ---
 
-#### Pihole running on Docker.
+#### Pihole running on Docker
 
 1. Install telegraf with docker as described earlier.
 
@@ -408,10 +408,3 @@ sudo systemctl start telegraf
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
 
 ---
-
-
-
-
-
-
-WORK IN PROGRESS
