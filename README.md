@@ -20,7 +20,7 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
 - [Installing Grafana](#Installing-Grafana)
   * [Setting up data source](#Setting-up-data-source)
     * [Telegraf](#Telegraf)
-    * [Varken (Plex Ecosystem)](#Varken-(Plex-Ecosystem))
+    * [Varken - Plex Ecosystem](#Varken-Plex-Ecosystem)
   * [Configuring Grafana](#Configuring-Grafana)
 ---
 
