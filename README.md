@@ -314,7 +314,9 @@ sudo systemctl start telegraf
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
 ```
 
-#### Setting up data source
+#### Setting up data sources
+
+##### Telegraf
 
 1. After the installation is finished go to the WebUI (http://IP:3000) and log in with username and password you chose.
 2. Click on Add data source and select InfluxDB.
@@ -329,7 +331,7 @@ sudo systemctl start telegraf
    URL: http://192.168.1.252:8086
    Database: docktelegraf
 ```
-###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf .
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf.
 
 <img widht=1200 height=1000 src="assets/gr_docktelegraf.png">
 
@@ -337,6 +339,22 @@ sudo systemctl start telegraf
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
 
+##### Varken (Plex Ecosystem)
 
+1. Click on Add data source and select InfluxDB.
+
+2. Next give the data source a name, add the URL to InfluxDB, enter the database to use. In this case: 
+```ini
+   Name: Plex
+   URL: http://192.168.1.252:8086
+   Database: varken
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under varken.
+
+<img widht=1200 height=1000 src="assets/gr_varken.png">
+
+3. click Save & Test. If all your settings are correct you should see **Data source is working** message.
+
+<img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
 
 WORK IN PROGRESS
