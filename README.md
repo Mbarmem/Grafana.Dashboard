@@ -322,9 +322,9 @@ sudo systemctl start telegraf
 ```
 ---
 
-#### Setting up data sources
+### Setting up data sources
 
-##### Telegraf
+#### Telegraf
 
 1. After the installation is finished go to the WebUI (http://IP:3000) and log in with username and password you chose.
 2. Click on Add data source and select InfluxDB.
@@ -346,9 +346,10 @@ sudo systemctl start telegraf
 4. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+
 ---
 
-##### Varken (Plex Ecosystem)
+#### Varken (Plex Ecosystem)
 
 1. Click on Add data source and select InfluxDB.
 
@@ -365,9 +366,10 @@ sudo systemctl start telegraf
 3. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+
 ---
 
-##### Sabnzbd
+#### Sabnzbd
 
 1. Click on Add data source and select InfluxDB.
 
@@ -387,7 +389,7 @@ sudo systemctl start telegraf
 
 ---
 
-##### SpeedTest
+#### SpeedTest
 
 1. Click on Add data source and select InfluxDB.
 
