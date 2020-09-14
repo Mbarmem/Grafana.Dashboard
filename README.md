@@ -21,6 +21,8 @@ Grafana dashboard for monitoring virtual machines, pihole, nas, docker container
   * [Setting up data source](#Setting-up-data-source)
     * [Telegraf](#Telegraf)
     * [Varken - Plex Ecosystem](#Varken-Plex-Ecosystem)
+    * [Sabnzbd](#Sabnzbd)
+    * [SpeedTest](#SpeedTest)
   * [Configuring Grafana](#Configuring-Grafana)
 ---
 
@@ -107,6 +109,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 
 [[inputs.file]]
 ```
+---
 
 #### Installing HDDTemp
 
@@ -178,6 +181,7 @@ sudo sensors-detect --auto
       - PGID=1000
       - TZ=Europe/Amsterdam
 ```
+---
 
 ## Installing Sabnzbd Script
 
@@ -266,6 +270,7 @@ sudo rm -rf /etc/telegraf/telegraf.conf
 ```ini
 sudo systemctl start telegraf
 ```
+---
 
 #### Pihole running on Docker.
 
@@ -315,6 +320,7 @@ sudo systemctl start telegraf
     environment:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel
 ```
+---
 
 #### Setting up data sources
 
@@ -333,13 +339,14 @@ sudo systemctl start telegraf
    URL: http://192.168.1.252:8086
    Database: docktelegraf
 ```
-###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf.
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. docktelegraf is the database which was set earlier under telegraf config.
 
 <img widht=1200 height=1000 src="assets/gr_docktelegraf.png">
 
 4. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+---
 
 ##### Varken (Plex Ecosystem)
 
@@ -351,12 +358,58 @@ sudo systemctl start telegraf
    URL: http://192.168.1.252:8086
    Database: varken
 ```
-###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. varken is the database which was set earlier under varken.
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. varken is the database assigned in varken config.
 
 <img widht=1200 height=1000 src="assets/gr_varken.png">
 
 3. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
 
 <img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+---
+
+##### Sabnzbd
+
+1. Click on Add data source and select InfluxDB.
+
+2. Next give the data source a name, add the URL to InfluxDB, enter the database to use. In this case: 
+```ini
+   Name: Sabnzbd
+   URL: http://192.168.1.252:8086
+   Database: varken
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. sabnzbd is the database assigned in sabnzbd script docker config.
+
+<img widht=1200 height=1000 src="assets/gr_sabnzbd.png">
+
+3. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
+
+<img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+
+---
+
+##### SpeedTest
+
+1. Click on Add data source and select InfluxDB.
+
+2. Next give the data source a name, add the URL to InfluxDB, enter the database to use. In this case: 
+```ini
+   Name: SpeedTest
+   URL: http://192.168.1.252:8086
+   Database: speedtest
+```
+###### 192.168.1.252 is the IP address of the server running InfluxDB and 8086 is the default InfluxDB port. speedtest is the database assigned in speedtest config.
+
+<img widht=1200 height=1000 src="assets/gr_speedtest.png">
+
+3. Click Save & Test. If all your settings are correct you should see **Data source is working** message.
+
+<img widht=330 height=230 src="assets/gr_docktelegraf_conf.png">
+
+---
+
+
+
+
+
 
 WORK IN PROGRESS
