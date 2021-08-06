@@ -6,7 +6,7 @@ services:
 
 # INFLUXDB - DATABASE FOR SENSOR DATA
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.8.6
     container_name: influxdb
     restart: always
     security_opt:
