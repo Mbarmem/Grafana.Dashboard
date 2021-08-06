@@ -49,7 +49,7 @@ Telegraf is what collects all the different system metrics and outputs it to an 
 ```ini
 # INFLUXDB - DATABASE FOR SENSOR DATA
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.8.6
     container_name: influxdb
     restart: always
     security_opt:
@@ -176,6 +176,10 @@ sudo sensors-detect --auto
       - no-new-privileges:true
     volumes:
       - ./docker/varken:/config
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
     environment:
       - PUID=1000
       - PGID=1000
@@ -196,6 +200,10 @@ sudo sensors-detect --auto
     restart: unless-stopped
     volumes:
     - ./docker/telegraf:/config
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
     environment:
       - INTERVAL=5
       - SABNBZBD_HOST=192.168.1.252                     # IP ADDRESS OF SABNZBD SERVER
@@ -222,11 +230,15 @@ Port = 8086                     # PORT OF INFLUXDB SERVER
 ```ini
 # SPEEDTEST – SPEEDTEST COLLECTOR FOR INFLUXDB
   speedtest:
-    image: atribe/speedtest-for-influxdb-and-grafana:latest
+    image: mbarmem/speedtest-for-influxdb:latest
     container_name: speedtest
-    volumes:
-      - ./docker/speedtest/config.ini:/src/config.ini
     restart: unless-stopped
+    volumes:
+      - ./docker/speedtest:/src
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
 ```
 ---
 
