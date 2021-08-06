@@ -64,6 +64,10 @@ services:
     container_name: hddtemp
     restart: unless-stopped
     privileged: true
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
     environment:
       - HDDTEMP_ARGS="-q -d -F /dev/sd*"
       - TZ=Europe/Amsterdam
@@ -77,6 +81,10 @@ services:
       - no-new-privileges:true
     volumes:
       - ./docker/varken:/config
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
     environment:
       - PUID=1000
       - PGID=1000
@@ -89,6 +97,10 @@ services:
     restart: unless-stopped
     volumes:
     - ./docker/telegraf:/config
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
     environment:
       - INTERVAL=5
       - SABNBZBD_HOST=192.168.1.252                     # IP ADDRESS OF SABNZBD SERVER
@@ -100,11 +112,15 @@ services:
 
 # SPEEDTEST – SPEEDTEST COLLECTOR FOR INFLUXDB
   speedtest:
-    image: atribe/speedtest-for-influxdb-and-grafana:latest
+    image: mbarmem/speedtest-for-influxdb:latest
     container_name: speedtest
-    volumes:
-      - ./docker/speedtest/config.ini:/src/config.ini
     restart: unless-stopped
+    volumes:
+      - ./docker/speedtest:/src
+    depends_on:
+      - influxdb
+      - telegraf
+      - grafana
 
 # SABNZBD - BINARY NEWSGRABBER (NZB DOWNLOADER)
   sabnzbd:
